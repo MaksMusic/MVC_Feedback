@@ -36,6 +36,7 @@ public class AdminController {
         }
 
         model.addAttribute("users", users);
+        model.addAttribute("date", LocalDateTime.now());
         return "index";
     }
 
