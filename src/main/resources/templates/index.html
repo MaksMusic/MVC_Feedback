@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/styles.css}" rel="stylesheet" />
+    <title>User Records</title>
+</head>
+
+
+<body>
+<div class="container">
+    <h1>User Records</h1>
+
+    <a th:href="@{/admin-panel(type='today')}">Show Records for Today</a>
+    <a th:href="@{/admin-panel(type='all')}">Show All Records</a>
+
+    <table th:if="${not #lists.isEmpty(users)}">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Date and Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.phoneNumber}"></td>
+            <td th:text="${#dates.format(#dates.create(user.dateTime.year, user.dateTime.monthValue, user.dateTime.dayOfMonth, user.dateTime.hour, user.dateTime.minute, 0), 'dd.MM.yyyy HH:mm')}"></td>
+
+        </tr>
+        </tbody>
+    </table>
+
+    <p th:if="${#lists.isEmpty(users)}">No records found.</p>
+</div>
+
+</body>
+</html>

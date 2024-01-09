@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <title>Регистрация</title>
+</head>
+<body>
+
+<div>
+<h1>Регистрация на урок</h1>
+<form th:action="@{/registration}" th:object="${user}" method="post">
+    <label for="name">Имя:</label>
+    <input type="text" id="name" name="name" th:field="*{name}" required>
+
+    <label for="phoneNumber">Номер телефона: пример (89001002000)</label>
+    <input type="tel" id="phoneNumber" name="phoneNumber" th:field="*{phoneNumber}" pattern="[0-9]{11}" required>
+    <small>Введите 10 цифр без пробелов и дефисов.</small>
+
+    <label for="dateTime">Дата и время:</label>
+    <input type="datetime-local" id="dateTime" name="dateTime" th:field="*{dateTime}" required>
+
+    <button type="submit">Зарегистрироваться</button>
+</form>
+</div>
+<script>
+    document.getElementById('dateTime').addEventListener('input', function() {
+        var selectedDateTime = new Date(this.value);
+        var minDateTime = new Date('2022-01-01T08:00');
+        var maxDateTime = new Date('2022-01-01T20:00');
+
+        if (selectedDateTime.getHours() < minDateTime.getHours() || selectedDateTime.getHours() > maxDateTime.getHours()) {
+            alert('Выберите время с 08:00 до 20:00');
+            this.value = '';  // Сброс значения поля, если выбрано недопустимое время
+        }
+    });
+</script>
+
+</body>
+</html>
